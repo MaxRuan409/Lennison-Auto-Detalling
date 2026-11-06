@@ -2,6 +2,8 @@
 
 Lennison Auto Detailing is a project involving the development of a web-based system for an automotive detailing business, designed to enhance its digital presence and streamline customer service. It will feature a display of available services, contact information, and a system for booking appointments quickly and easily.
 
+Lennison Auto Detailing es un proyecto que consiste en el desarrollo de un sistema web para un negocio de detallado automotriz, diseñado para potenciar su presencia digital y optimizar la atención al cliente. Incluirá una muestra de los servicios disponibles, información de contacto y un sistema para reservar citas de manera rápida y sencilla.
+
 [Versión en español](#español)
 
 ## Requirements
