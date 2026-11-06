@@ -19,6 +19,12 @@ Open the project in an IDE or code editor (such as NetBeans or Visual Studio Cod
 
 This is the file that needs to be executed.
 
+Alternatively, from the terminal (inside the project folder):
+
+```bash
+mvn compile exec:java
+```
+
 ## Step #3: Open the project in your browser
 Once `Main.java` has been executed successfully, open your web browser and go to:
 
@@ -44,6 +50,12 @@ Abre el proyecto en un editor de código o IDE (como NetBeans o Visual Studio Co
 `LennisonAutoDetailing/src/main/java/com/lennison`
 
 Ese es el archivo que se debe ejecutar.
+
+También puedes ejecutarlo desde la terminal (dentro de la carpeta del proyecto):
+
+```bash
+mvn compile exec:java
+```
 
 ### Paso #3: Abrir el proyecto en el navegador
 Después de ejecutar con éxito `Main.java`, abre tu navegador e ingresa:
