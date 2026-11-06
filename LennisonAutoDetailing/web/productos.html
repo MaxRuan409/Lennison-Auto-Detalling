@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos | Lennison Auto Detailing</title>
+    
+    <!-- Biblioteca de íconos vectoriales FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- DISEÑO DE INTERFAZ PREMIUM INTEGRADO --- */
+        :root {
+            --color-bg: #000000;            /* Negro */
+            --color-acento: #8B0000;        /* Rojo oscuro */
+            --color-acento-hover: #b30000;  /* Rojo un poco más claro */
+            --color-texto: #FFFFFF;         /* Blanco */
+            --color-input-bg: #212121;      /* Gris oscuro */
+            --color-border: #333333;        /* Borde gris */
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --transition: all 0.3s ease;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.2);
+            --shadow-md: 0 4px 10px rgba(0,0,0,0.4);
+            --shadow-hover: 0 10px 15px rgba(139, 0, 0, 0.2);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-bg);
+            color: var(--color-texto);
+            margin: 0;
+            padding: 0;
+            display: block;
+            min-height: 100vh;
+        }
+
+        /* --- Barra de Navegación --- */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            background-color: var(--color-input-bg);
+            border-bottom: 1px solid var(--color-border);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .navbar-brand {
+            font-family: 'Michroma', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--color-texto);
+            text-transform: uppercase;
+        }
+
+        .navbar-brand span {
+            color: var(--color-acento);
+        }
+
+        .navbar-menu {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        /* --- Carrito Badge --- */
+        .cart-wrapper {
+            position: relative;
+            text-decoration: none;
+            color: inherit;
+            font-size: 1.4rem;
+            transition: var(--transition);
+        }
+
+        .cart-wrapper:hover {
+            transform: scale(1.1);
+            color: var(--color-acento);
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -5px;
+            right: -10px;
+            background-color: var(--color-acento);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 50%;
+        }
+
+        /* --- Contenedor de la Tienda --- */
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 5%;
+        }
+
+        .header-tienda {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--color-border);
+            padding-bottom: 15px;
+        }
+
+        .header-tienda h2 {
+            font-family: 'Michroma', sans-serif;
+            font-size: 1.3rem;
+            margin: 0;
+            text-transform: uppercase;
+        }
+
+        .btn-volver {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background-color: var(--color-input-bg);
+            color: var(--color-texto);
+            text-decoration: none;
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .btn-volver:hover {
+            border-color: var(--color-acento);
+            color: var(--color-acento);
+        }
+
+        /* --- Rejilla del Catálogo --- */
+        .grid-productos {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        /* --- Tarjeta del Producto --- */
+        .card-producto {
+            background-color: var(--color-input-bg);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .card-producto:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--color-acento);
+        }
+
+        .producto-img-container {
+            width: 100%;
+            height: 200px;
+            background-color: #111111;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .producto-img-placeholder {
+            font-size: 3rem;
+            color: var(--color-acento);
+        }
+
+        .producto-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .producto-body {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .producto-titulo {
+            font-family: 'Michroma', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            margin: 0 0 10px 0;
+            color: var(--color-texto);
+        }
+
+        .producto-desc {
+            font-size: 0.9rem;
+            color: #aaaaaa;
+            margin-bottom: 20px;
+            flex-grow: 1;
+            line-height: 1.4;
+        }
+
+        .producto-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+
+        .producto-precio {
+            font-family: 'Michroma', sans-serif;
+            font-size: 1.2rem;
+            color: var(--color-texto);
+        }
+
+        .btn-agregar {
+            background-color: var(--color-acento);
+            color: var(--color-texto);
+            border: none;
+            padding: 10px 18px;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-agregar:hover {
+            background-color: var(--color-acento-hover);
+            box-shadow: 0 4px 10px rgba(139, 0, 0, 0.4);
+        }
+        /* 1. Ajuste del contenedor de la barra de navegación */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.3rem 5% !important; /* Mantiene la barra compacta */
+            background-color: var(--color-input-bg);
+            border-bottom: 1px solid var(--color-border);
+            box-shadow: var(--shadow-sm);
+        }
+        /* 2. Contenedor del logo con máscara de recorte (overflow: hidden) */
+        .navbar-brand-logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            height: 60px;       /* Altura del recuadro visible */
+            width: 160px;       /* Ancho del recuadro visible */
+            overflow: hidden;   /* Oculta y recorta los bordes negros que sobresalgan */
+            position: relative;
+        }
+
+        /* 3. Imagen con zoom aplicado */
+        .logo-navbar {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;   /* Ajusta la imagen para cubrir el contenedor */
+            transform: scale(1.0); /* Aplica un 40% de zoom hacia el centro del logo */
+            transform-origin: center;
+            transition: all 0.3s ease;
+        }
+
+        .logo-navbar:hover {
+            transform: scale(1.1); /* Efecto interactivo sutil sobre el zoom */
+        }
+    </style>
+</head>
+    <nav class="navbar">
+        <a href="/inicio-usuario" class="navbar-brand-logo" style="color: white; font-family: 'Michroma', sans-serif; text-decoration: none; font-size: 1.2rem; font-weight: bold; text-transform: uppercase; display: flex; align-items: center; width: auto; height: auto;">
+            Lennison <span style="color: var(--color-acento); margin-left: 5px;">Detailing</span>
+        </a>
+        
+        <div class="navbar-menu">
+            <a href="/carrito" class="cart-wrapper" title="Ir al Carrito">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span class="cart-badge" id="cart-badge">{{CANTIDAD_CARRITO}}</span>
+            </a>
+        </div>
+    </nav>
+
+    <main class="dashboard-container">
+        <div class="header-tienda">
+            <h2>Catálogo de Productos</h2>
+            <a href="/inicio-usuario" class="btn-volver">
+                <i class="fa-solid fa-arrow-left"></i> Volver al Panel
+            </a>
+        </div>
+
+        <div id="contenedor-productos" class="grid-productos">
+            {{CONTENIDO_PRODUCTOS}}
+        </div>
+    </main>
+
+</body>
+</html>

@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Principal | Lennison Auto Detailing</title>
+    
+    <!-- Biblioteca de íconos vectoriales FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- DISEÑO DE INTERFAZ PREMIUM INTEGRADO --- */
+        :root {
+            --color-bg: #000000;            /* Negro */
+            --color-acento: #8B0000;        /* Rojo oscuro */
+            --color-acento-hover: #b30000;  /* Rojo un poco más claro */
+            --color-texto: #FFFFFF;         /* Blanco */
+            --color-input-bg: #212121;      /* Gris oscuro */
+            --color-border: #333333;        /* Borde gris */
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --transition: all 0.3s ease;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.2);
+            --shadow-md: 0 4px 10px rgba(0,0,0,0.4);
+            --shadow-hover: 0 10px 15px rgba(139, 0, 0, 0.2);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-bg);
+            color: var(--color-texto);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Permite empujar el footer hacia abajo */
+        }
+
+        /* --- Barra de Navegación --- */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            background-color: var(--color-input-bg);
+            border-bottom: 1px solid var(--color-border);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .navbar-brand {
+            font-family: 'Michroma', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--color-texto);
+            text-transform: uppercase;
+        }
+
+        .navbar-brand span {
+            color: var(--color-acento);
+        }
+
+        .navbar-menu {
+            display: flex;
+            align-items: center;
+            gap: 1.8rem;
+        }
+
+        /* Enlaces de Acción Rápida (Iconos Superiores) */
+        .navbar-link {
+            text-decoration: none;
+            color: var(--color-texto);
+            font-size: 1.35rem;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .navbar-link:hover {
+            transform: scale(1.15);
+            color: var(--color-acento);
+        }
+
+        /* Carrito de Compras en Cabecera */
+        .cart-wrapper {
+            position: relative;
+            text-decoration: none;
+            color: var(--color-texto);
+            font-size: 1.35rem;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .cart-wrapper:hover {
+            transform: scale(1.15);
+            color: var(--color-acento);
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -6px;
+            right: -10px;
+            background-color: var(--color-acento);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: bold;
+            min-width: 16px;
+            height: 16px;
+            padding: 2px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Botón Cerrar Sesión */
+        .btn-logout {
+            padding: 0.6rem 1.2rem;
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            background-color: transparent;
+            color: var(--color-acento);
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-logout:hover {
+            background-color: var(--color-acento);
+            color: var(--color-texto);
+            border-color: var(--color-acento);
+        }
+
+        /* --- Contenedor Principal --- */
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 5%;
+            flex-grow: 1; /* Fuerza a ocupar el espacio excedente para empujar el footer */
+        }
+
+        .saludo-usuario {
+            font-size: 1.8rem;
+            margin-bottom: 40px;
+            font-weight: 400;
+            text-align: center;
+        }
+
+        .saludo-usuario span {
+            font-family: 'Michroma', sans-serif;
+            font-weight: 700;
+            color: var(--color-acento);
+        }
+
+        /* Rejilla de Menú Optimizada para 2 Tarjetas */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Tarjetas del Menú Central */
+        .card-menu {
+            background-color: var(--color-input-bg);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            padding: 50px 30px;
+            text-align: center;
+            text-decoration: none;
+            color: var(--color-texto);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .card-menu:hover {
+            transform: translateY(-8px);
+            border-color: var(--color-acento);
+            box-shadow: 0 10px 25px rgba(139, 0, 0, 0.2);
+        }
+
+        .card-icon {
+            font-size: 3.5rem;
+            color: var(--color-acento);
+            transition: var(--transition);
+        }
+
+        .card-menu:hover .card-icon {
+            transform: scale(1.1);
+        }
+
+        .card-title {
+            font-family: 'Michroma', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* --- Footer Premium --- */
+        .site-footer {
+            background-color: var(--color-input-bg);
+            border-top: 1px solid var(--color-border);
+            padding: 25px 5%;
+            font-size: 0.85rem;
+            color: #aaaaaa;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-logo {
+            font-family: 'Michroma', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--color-texto);
+            text-transform: uppercase;
+        }
+
+        .footer-logo span {
+            color: var(--color-acento);
+        }
+
+        .footer-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .footer-link-item {
+            color: #aaaaaa;
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-link-item:hover {
+            color: var(--color-texto);
+        }
+
+        .footer-socials {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .social-icon {
+            color: #aaaaaa;
+            font-size: 1.3rem;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .social-icon:hover {
+            color: var(--color-acento);
+            transform: scale(1.15);
+        }
+
+        @media (max-width: 768px) {
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            .footer-links {
+                flex-direction: column;
+                gap: 12px;
+            }
+        }
+        /* 1. Ajuste del contenedor de la barra de navegación */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.3rem 5% !important; /* Mantiene la barra compacta */
+            background-color: var(--color-input-bg);
+            border-bottom: 1px solid var(--color-border);
+            box-shadow: var(--shadow-sm);
+        }
+        /* 2. Contenedor del logo con máscara de recorte (overflow: hidden) */
+        .navbar-brand-logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            height: 60px;       /* Altura del recuadro visible */
+            width: 160px;       /* Ancho del recuadro visible */
+            overflow: hidden;   /* Oculta y recorta los bordes negros que sobresalgan */
+            position: relative;
+        }
+
+        /* 3. Imagen con zoom aplicado */
+        .logo-navbar {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;   /* Ajusta la imagen para cubrir el contenedor */
+            transform: scale(1.0); /* Aplica un 40% de zoom hacia el centro del logo */
+            transform-origin: center;
+            transition: all 0.3s ease;
+        }
+
+        .logo-navbar:hover {
+            transform: scale(1.1); /* Efecto interactivo sutil sobre el zoom */
+        }
+        
+       
+    </style>
+</head>
+<body>
+    
+    <nav class="navbar">
+        <a href="/inicio-usuario" class="navbar-brand-logo" style="color: white; font-family: 'Michroma', sans-serif; text-decoration: none; font-size: 1.2rem; font-weight: bold; text-transform: uppercase; display: flex; align-items: center; width: auto; height: auto;">
+            Lennison <span style="color: var(--color-acento); margin-left: 5px;">Detailing</span>
+        </a>
+        
+        <div class="navbar-menu">
+            <!-- Icono 1: Historial de Pedidos -->
+            <a href="/historial" class="navbar-link" title="Historial de Pedidos">
+                <i class="fa-solid fa-clock-rotate-left"></i>
+            </a>
+
+            <!-- Icono 2: Mi Perfil de Usuario -->
+            <a href="/perfil" class="navbar-link" title="Mi Perfil">
+                <i class="fa-solid fa-user-gear"></i>
+            </a>
+
+            <!-- Icono 3: Carrito de Compras -->
+            <a href="/carrito" class="cart-wrapper" title="Ir al Carrito">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span class="cart-badge" id="cart-badge">{{CANTIDAD_CARRITO}}</span>
+            </a>
+
+            <!-- Botón Cerrar Sesión -->
+            <a href="/logout" class="btn-logout" style="text-decoration: none;">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i> Cerrar Sesión
+            </a>
+        </div>
+    </nav>
+
+    <main class="dashboard-container">
+        <h2 class="saludo-usuario">Bienvenido de vuelta, <span id="nombre-display">{{USUARIO_NOMBRE}}</span></h2>
+
+        <!-- Menú de Selección Principal -->
+        <div class="dashboard-grid">
+            <a href="/productos" class="card-menu">
+                <div class="card-icon"><i class="fa-solid fa-spray-can-sparkles"></i></div>
+                <div class="card-title">Comprar Productos</div>
+            </a>
+            
+            <a href="/servicios" class="card-menu">
+                <div class="card-icon"><i class="fa-solid fa-calendar-check"></i></div>
+                <div class="card-title">Agendar Servicios</div>
+            </a>
+        </div>
+    </main>
+
+    <!-- Pie de Página Premium -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                Lennison <span>Detailing</span>
+            </div>
+            
+            <div class="footer-links">
+                <a href="https://maps.app.goo.gl/jqbugguhDCTtBTLe8" target="_blank" rel="noopener noreferrer" class="footer-link-item" title="Abrir ubicación en Google Maps">
+                    <i class="fa-solid fa-location-dot" style="color: var(--color-acento);"></i> Nuestra Ubicación
+                </a>
+                <span style="color: var(--color-border); display: inline-block;">|</span>
+                <span>&copy; 2025 Lennison Auto Detailing. Todos los derechos reservados.</span>
+            </div>
+
+            <div class="footer-socials">
+                <a href="https://www.facebook.com/profile.php?id=100065021950232" target="_blank" rel="noopener noreferrer" class="social-icon" title="Síguenos en Facebook">
+                    <i class="fa-brands fa-facebook"></i>
+                </a>
+                <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" class="social-icon" title="Síguenos en Instagram">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+                <a href="https://wa.me/5211234567890" target="_blank" rel="noopener noreferrer" class="social-icon" title="Contáctanos vía WhatsApp">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

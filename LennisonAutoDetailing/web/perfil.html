@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Perfil | Lennison Auto Detailing</title>
+    
+    <!-- Biblioteca de íconos vectoriales FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- DISEÑO DE INTERFAZ PREMIUM INTEGRADO --- */
+        :root {
+            --color-bg: #000000;            /* Negro */
+            --color-acento: #8B0000;        /* Rojo oscuro */
+            --color-acento-hover: #b30000;  /* Rojo un poco más claro */
+            --color-texto: #FFFFFF;         /* Blanco */
+            --color-input-bg: #212121;      /* Gris oscuro */
+            --color-border: #333333;        /* Borde gris */
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --transition: all 0.3s ease;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-bg);
+            color: var(--color-texto);
+            margin: 0;
+            padding: 0;
+            display: block;
+            min-height: 100vh;
+        }
+
+        /* --- Barra de Navegación --- */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            background-color: var(--color-input-bg);
+            border-bottom: 1px solid var(--color-border);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .navbar-brand {
+            font-family: 'Michroma', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--color-texto);
+            text-transform: uppercase;
+        }
+
+        .navbar-brand span {
+            color: var(--color-acento);
+        }
+
+        /* --- Contenedor Principal --- */
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 5%;
+        }
+
+        .btn-volver {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background-color: var(--color-input-bg);
+            color: var(--color-texto);
+            text-decoration: none;
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .btn-volver:hover {
+            border-color: var(--color-acento);
+            color: var(--color-acento);
+        }
+
+        /* --- Tarjeta del Perfil de Usuario --- */
+        .tarjeta-blanca {
+            background-color: var(--color-input-bg);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            padding: 40px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .tarjeta-blanca h2 {
+            font-family: 'Michroma', sans-serif;
+            text-align: center;
+            margin: 0 0 10px 0;
+            font-size: 1.3rem;
+            text-transform: uppercase;
+        }
+
+        .tarjeta-blanca p {
+            text-align: center;
+            color: #aaaaaa;
+            font-size: 0.9rem;
+            margin-bottom: 30px;
+        }
+
+        .grupo-input {
+            margin-bottom: 20px;
+        }
+
+        .grupo-input label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            color: #aaaaaa;
+            font-weight: 600;
+        }
+
+        .grupo-input input {
+            width: 100%;
+            padding: 12px 16px;
+            background-color: var(--color-bg);
+            border: 1px solid var(--color-border);
+            color: var(--color-texto);
+            border-radius: var(--radius-md);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            outline: none;
+            transition: var(--transition);
+            box-sizing: border-box;
+        }
+
+        .grupo-input input:focus {
+            border-color: var(--color-acento);
+            box-shadow: 0 0 8px rgba(139, 0, 0, 0.2);
+        }
+
+        .btn-principal {
+            width: 100%;
+            padding: 14px;
+            background-color: var(--color-acento);
+            color: var(--color-texto);
+            border: none;
+            border-radius: var(--radius-md);
+            font-family: 'Michroma', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-principal:hover {
+            background-color: var(--color-acento-hover);
+            box-shadow: 0 5px 15px rgba(139, 0, 0, 0.4);
+        }
+
+        /* Toasts de Notificación */
+        #toast-contenedor {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            pointer-events: none;
+        }
+
+        .toast {
+            min-width: 280px;
+            max-width: 380px;
+            padding: 14px 18px;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            line-height: 1.4;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .toast.toast-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .toast-error {
+            background-color: var(--color-acento);
+            color: var(--color-texto);
+            border: 1px solid var(--color-acento-hover);
+        }
+
+        .toast-exito {
+            background-color: var(--color-input-bg);
+            color: var(--color-texto);
+            border: 2px solid var(--color-acento);
+        }/* 1. Ajuste del contenedor de la barra de navegación */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.3rem 5% !important; /* Mantiene la barra compacta */
+            background-color: var(--color-input-bg);
+            border-bottom: 1px solid var(--color-border);
+            box-shadow: var(--shadow-sm);
+        }
+        /* 2. Contenedor del logo con máscara de recorte (overflow: hidden) */
+        .navbar-brand-logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            height: 60px;       /* Altura del recuadro visible */
+            width: 160px;       /* Ancho del recuadro visible */
+            overflow: hidden;   /* Oculta y recorta los bordes negros que sobresalgan */
+            position: relative;
+        }
+
+        /* 3. Imagen con zoom aplicado */
+        .logo-navbar {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;   /* Ajusta la imagen para cubrir el contenedor */
+            transform: scale(1.0); /* Aplica un 40% de zoom hacia el centro del logo */
+            transform-origin: center;
+            transition: all 0.3s ease;
+        }
+
+        .logo-navbar:hover {
+            transform: scale(1.1); /* Efecto interactivo sutil sobre el zoom */
+        }
+    </style>
+</head>
+<body style="display: block;">
+
+    <nav class="navbar">
+        <a href="/inicio-usuario" class="navbar-brand-logo" style="color: white; font-family: 'Michroma', sans-serif; text-decoration: none; font-size: 1.2rem; font-weight: bold; text-transform: uppercase; display: flex; align-items: center; width: auto; height: auto;">
+            Lennison <span style="color: var(--color-acento); margin-left: 5px;">Detailing</span>
+        </a>
+        <div class="navbar-menu">
+            <a href="/inicio-usuario" class="btn-volver">
+                <i class="fa-solid fa-arrow-left"></i> Volver al Panel
+            </a>
+        </div>
+    </nav>
+
+    <main class="dashboard-container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: start;">
+        
+        <!-- Tarjeta de Datos de Perfil -->
+        <div class="tarjeta-blanca">
+            <h2>Mi Perfil</h2>
+            <p>Modifica tus datos personales y mantén tu cuenta actualizada.</p>
+
+            {{MENSAJE_PERFIL}}
+
+            <form action="/perfil/actualizar" method="POST">
+                <div class="grupo-input">
+                    <label for="nombre">Nombre Completo *</label>
+                    <input type="text" id="nombre" name="nombre" value="{{USUARIO_NOMBRE}}" required>
+                </div>
+
+                <div class="grupo-input">
+                    <label for="correo">Correo Electrónico *</label>
+                    <input type="email" id="correo" name="correo" value="{{USUARIO_CORREO}}" required>
+                </div>
+
+                <div class="grupo-input" style="margin-bottom: 25px;">
+                    <label for="telefono">Teléfono / Celular *</label>
+                    <input type="tel" id="telefono" name="telefono" value="{{USUARIO_TELEFONO}}" required>
+                </div>
+
+                <button type="submit" class="btn-principal">
+                    <i class="fa-solid fa-floppy-disk"></i> Guardar Cambios
+                </button>
+            </form>
+        </div>
+
+        <!-- Tarjeta de Cambio de Contraseña -->
+        <div class="tarjeta-blanca">
+            <h2>Cambiar Contraseña</h2>
+            <p>Protege tu cuenta actualizando la clave de acceso.</p>
+
+            {{MENSAJE_CLAVE}}
+
+            <form action="/perfil/actualizar-clave" method="POST">
+                <div class="grupo-input">
+                    <label for="claveActual">Contraseña Actual *</label>
+                    <input type="password" id="claveActual" name="claveActual" placeholder="••••••••" required style="width: 100%; padding: 12px 16px; background-color: var(--color-bg); border: 1px solid var(--color-border); color: var(--color-texto); border-radius: var(--radius-md); font-family: 'Inter', sans-serif; box-sizing: border-box;">
+                </div>
+                
+                <div class="grupo-input">
+                    <label for="nuevaClave">Nueva Contraseña *</label>
+                    <input type="password" id="nuevaClave" name="nuevaClave" placeholder="Mínimo 6 caracteres" required style="width: 100%; padding: 12px 16px; background-color: var(--color-bg); border: 1px solid var(--color-border); color: var(--color-texto); border-radius: var(--radius-md); font-family: 'Inter', sans-serif; box-sizing: border-box;">
+                </div>
+
+                <div class="grupo-input" style="margin-bottom: 25px;">
+                    <label for="confirmarClave">Confirmar Nueva Contraseña *</label>
+                    <input type="password" id="confirmarClave" name="confirmarClave" placeholder="Repite la nueva contraseña" required style="width: 100%; padding: 12px 16px; background-color: var(--color-bg); border: 1px solid var(--color-border); color: var(--color-texto); border-radius: var(--radius-md); font-family: 'Inter', sans-serif; box-sizing: border-box;">
+                </div>
+
+                <button type="submit" class="btn-principal">
+                    <i class="fa-solid fa-key"></i> Actualizar Contraseña
+                </button>
+            </form>
+        </div>
+    </main>
+
+</body>
+</html>

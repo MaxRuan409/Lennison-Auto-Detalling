@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial de Pedidos | Lennison Auto Detailing</title>
+    
+    <!-- Biblioteca de íconos vectoriales FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- DISEÑO DE INTERFAZ PREMIUM INTEGRADO --- */
+        :root {
+            --color-bg: #000000;            /* Negro */
+            --color-acento: #8B0000;        /* Rojo oscuro */
+            --color-acento-hover: #b30000;  /* Rojo un poco más claro */
+            --color-texto: #FFFFFF;         /* Blanco */
+            --color-input-bg: #212121;      /* Gris oscuro */
+            --color-border: #333333;        /* Borde gris */
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --transition: all 0.3s ease;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-bg);
+            color: var(--color-texto);
+            margin: 0;
+            padding: 0;
+            display: block;
+            min-height: 100vh;
+        }
+
+        /* --- Barra de Navegación --- */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            background-color: var(--color-input-bg);
+            border-bottom: 1px solid var(--color-border);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .navbar-brand {
+            font-family: 'Michroma', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--color-texto);
+            text-transform: uppercase;
+        }
+
+        .navbar-brand span {
+            color: var(--color-acento);
+        }
+
+        .btn-volver {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background-color: var(--color-input-bg);
+            color: var(--color-texto);
+            text-decoration: none;
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .btn-volver:hover {
+            border-color: var(--color-acento);
+            color: var(--color-acento);
+        }
+
+        /* --- Contenedor Principal --- */
+        .dashboard-container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 5%;
+        }
+
+        .header-historial {
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--color-border);
+            padding-bottom: 15px;
+        }
+
+        .header-historial h2 {
+            font-family: 'Michroma', sans-serif;
+            font-size: 1.3rem;
+            margin: 0 0 8px 0;
+            text-transform: uppercase;
+        }
+
+        .header-historial p {
+            color: #aaaaaa;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        /* --- Tarjetas del Historial (Insertadas Dinámicamente) --- */
+        .tarjeta-blanca {
+            background-color: var(--color-input-bg) !important;
+            border: 1px solid var(--color-border) !important;
+            border-radius: var(--radius-lg) !important;
+            padding: 25px !important;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5) !important;
+            color: var(--color-texto) !important;
+            transition: var(--transition);
+        }
+
+        .tarjeta-blanca:hover {
+            border-color: var(--color-acento) !important;
+        }
+
+        /* Estilos de Botones de Colapso de Historial */
+        .btn-toggle-detalle {
+            background: transparent !important;
+            border: 1px solid var(--color-border) !important;
+            color: #aaaaaa !important;
+            cursor: pointer;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            margin-top: 15px;
+            padding: 8px 16px !important;
+            font-size: 0.85rem !important;
+            border-radius: var(--radius-md);
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-toggle-detalle:hover {
+            color: var(--color-texto) !important;
+            border-color: var(--color-acento) !important;
+            background-color: rgba(139, 0, 0, 0.1) !important;
+        }
+
+        /* Tablas de Detalles del Pedido */
+        .bloque-detalle table {
+            border-spacing: 0;
+            width: 100%;
+        }
+
+        .bloque-detalle th {
+            color: #888888 !important;
+            font-family: 'Michroma', sans-serif;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .bloque-detalle td {
+            color: var(--color-texto) !important;
+            border-bottom: 1px solid var(--color-border) !important;
+        }
+
+        /* Botón de Enlace de Volver en Alerta de Historial Vacío */
+        .tarjeta-blanca .btn-principal {
+            display: inline-flex;
+            width: auto;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: var(--radius-md);
+            background-color: var(--color-acento);
+            color: var(--color-texto);
+            font-family: 'Michroma', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: var(--transition);
+            margin-top: 15px;
+        }
+
+        .tarjeta-blanca .btn-principal:hover {
+            background-color: var(--color-acento-hover);
+        }
+
+        /* Toasts de Notificación */
+        #toast-contenedor {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            pointer-events: none;
+        }
+
+        .toast {
+            min-width: 280px;
+            max-width: 380px;
+            padding: 14px 18px;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            line-height: 1.4;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .toast.toast-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .toast-error {
+            background-color: var(--color-acento);
+            color: var(--color-texto);
+            border: 1px solid var(--color-acento-hover);
+        }
+
+        .toast-exito {
+            background-color: var(--color-input-bg);
+            color: var(--color-texto);
+            border: 2px solid var(--color-acento);
+        }/* 1. Ajuste del contenedor de la barra de navegación */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.3rem 5% !important; /* Mantiene la barra compacta */
+            background-color: var(--color-input-bg);
+            border-bottom: 1px solid var(--color-border);
+            box-shadow: var(--shadow-sm);
+        }
+        /* 2. Contenedor del logo con máscara de recorte (overflow: hidden) */
+        .navbar-brand-logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            height: 60px;       /* Altura del recuadro visible */
+            width: 160px;       /* Ancho del recuadro visible */
+            overflow: hidden;   /* Oculta y recorta los bordes negros que sobresalgan */
+            position: relative;
+        }
+
+        /* 3. Imagen con zoom aplicado */
+        .logo-navbar {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;   /* Ajusta la imagen para cubrir el contenedor */
+            transform: scale(1.0); /* Aplica un 40% de zoom hacia el centro del logo */
+            transform-origin: center;
+            transition: all 0.3s ease;
+        }
+
+        .logo-navbar:hover {
+            transform: scale(1.1); /* Efecto interactivo sutil sobre el zoom */
+        }
+    </style>
+</head>
+<body style="display: block;">
+
+    <nav class="navbar">
+        <a href="/inicio-usuario" class="navbar-brand-logo" style="color: white; font-family: 'Michroma', sans-serif; text-decoration: none; font-size: 1.2rem; font-weight: bold; text-transform: uppercase; display: flex; align-items: center; width: auto; height: auto;">
+            Lennison <span style="color: var(--color-acento); margin-left: 5px;">Detailing</span>
+        </a>
+        <div class="navbar-menu">
+            <a href="/inicio-usuario" class="btn-volver">
+                <i class="fa-solid fa-arrow-left"></i> Volver al Panel
+            </a>
+        </div>
+    </nav>
+
+    <main class="dashboard-container">
+        <div class="header-historial">
+            <h2>Mis Pedidos y Agendamientos</h2>
+            <p>Consulta los estados e ítems de tus servicios solicitados.</p>
+        </div>
+
+        <div class="tarjeta-blanca" style="overflow-x: auto; margin-top: 30px; border: 1px solid var(--color-border); border-radius: var(--radius-lg); background-color: var(--color-input-bg); padding: 20px;">
+            <table class="tabla-carrito" style="width: 100%; border-collapse: collapse; text-align: left; color: var(--color-texto);">
+                <thead>
+                    <tr style="border-bottom: 2px solid var(--color-border); font-family: 'Michroma', sans-serif; font-size: 0.85rem;">
+                        <th style="padding: 15px 10px;">ID</th>
+                        <th style="padding: 15px 10px;">Fecha Compra</th>
+                        <th style="padding: 15px 10px;">Fecha Servicio</th>
+                        <th style="padding: 15px 10px;">Total</th>
+                        <th style="padding: 15px 10px;">Estado</th>
+                        <th style="padding: 15px 10px;">Vehículo</th>
+                    </tr>
+                </thead>
+                <tbody style="font-size: 0.9rem;">
+                    {{CONTENIDO_HISTORIAL}}
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+</body>
+</html>
